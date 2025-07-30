@@ -70,10 +70,10 @@
     "smart-memory.sh",
     "turbo-first-build.sh",
     "ultra-warmup.sh",
-    "smart-yarn.sh",
-    "startup.sh",
     "android/gradle.properties",
     "README.md",
-    "README-FULL.md"
+    "CHANGELOG.md",
+    "LICENSE",
+    "install.sh"
   ]
 }

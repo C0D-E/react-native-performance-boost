@@ -154,49 +154,6 @@ yarn install && yarn android      # Standard builds (longer wait)
 
 ---
 
-## 🎯 For Teammates - Quick Migration Guide
-
-**If your teammate is using the old `startup.sh` and `sy` commands, here's how to upgrade:**
-
-### **🔄 Migration Steps:**
-```bash
-# 1. One-time setup (replaces old startup.sh method)
-ln -sf performance-boost/code-max code-max
-ln -sf performance-boost/smart-dev smart-dev
-
-# 2. New daily workflow (replaces sy commands)
-./code-max                    # Replaces: cd performance-boost && ./startup.sh
-smart-dev install            # Replaces: sy install  
-smart-dev android            # Replaces: yarn android (but with optimizations)
-smart-dev add <package>       # Replaces: sy add <package>
-```
-
-### **🆚 Command Mapping:**
-| **Old Method** | **New Method** | **Improvement** |
-|----------------|----------------|------------------|
-| `cd performance-boost && ./startup.sh` | `./code-max` | No VS Code restart needed |
-| `sy install` | `smart-dev install` | Better memory management |
-| `sy add <package>` | `smart-dev add <package>` | Auto-cleanup included |
-| `yarn android` | `smart-dev android` | Auto-optimization detection |
-
-**✅ Benefits of upgrading:**
-- No more VS Code restarts
-- Cleaner command interface
-- Better error handling and logging
-- Automatic cold/warm build detection
-yarn android  
-
-# For subsequent builds - 5-10 seconds!
-./ultra-warmup.sh
-yarn android  # Now blazing fast! ⚡
-```
-
-**🎯 TARGET ACHIEVED: ~20 second first builds!** 🚀
-
-**That's it! Three simple steps for maximum M4 Max performance.** 🎯
-
----
-
 ## 🔥 TURBO MODE EXPLAINED - How We Achieved ~20 Second Builds
 
 ### **What happens when you run `smart-dev add` or `smart-dev install`:**
@@ -422,19 +379,19 @@ smart-dev add some-package    # Always safe and optimized
 yarn install && yarn android      # Safe on ANY system, just 8-25min builds
 
 # 🚀 But this is MUCH faster:
-sy install && yarn android        # Optimized builds: 45s-5min!
+smart-dev install && smart-dev android   # Optimized builds: 45s-5min!
 ```
 
 **📊 What Your Teammates Will Experience:**
 
-| Their System | Auto-Detected | With `sy install` | With `yarn install` |
+| Their System | Auto-Detected | With `smart-dev install` | With `yarn install` |
 |-------------|---------------|------------------|-------------------|
 | **MacBook Pro 64GB** | HIGH_END | **45s builds** | ~8 min builds |
 | **MacBook Air 32GB** | MID_RANGE | **90s builds** | ~12 min builds |
 | **Budget Laptop 16GB** | ENTRY_LEVEL | **3 min builds** | ~20 min builds |
 
 **🚀 Performance Difference:**
-- **`sy install` + `yarn android`**: Optimized memory allocation → Fast builds
+- **`smart-dev install` + `smart-dev android`**: Optimized memory allocation → Fast builds
 - **`yarn install` + `yarn android`**: Default memory → Slow builds
 
 **🛡️ Safety Features for Teams:**
@@ -446,17 +403,17 @@ sy install && yarn android        # Optimized builds: 45s-5min!
 ### **📦 Package Management Examples**
 ```bash
 # Fresh install (like after git clone)
-sy install                      # Safe for large installs
+smart-dev install                      # Safe for large installs
 
 # Adding multiple packages
-sy add package1 package2 package3   # All handled automatically
+smart-dev add package1 package2 package3   # All handled automatically
 
 # Upgrading packages  
-sy upgrade                      # Safe upgrade process
+smart-dev install                      # Safe upgrade process
 
 # After node_modules cleanup
 rm -rf node_modules
-sy install                      # Safe reinstall
+smart-dev install                      # Safe reinstall
 ```
 
 ---
@@ -709,22 +666,6 @@ smart-dev install         # Install dependencies
 smart-dev android         # Build (auto-optimized)
 smart-dev add <package>    # Add packages safely
 ```
-
-### **�️ LEGACY METHODS (Deprecated - Use New Workflow Above):**
-```bash
-# ❌ OLD individual scripts (replaced by smart-dev)
-./smart-memory.sh         # → Use smart-dev (includes memory optimization)
-./turbo-first-build.sh    # → Use smart-dev android (auto-detects cold builds)
-./ultra-warmup.sh         # → Use smart-dev android (auto-detects warm builds)
-./startup.sh              # → Use ./code-max (no VS Code restart needed)
-./smart-yarn.sh           # → Use smart-dev add/install (better interface)
-
-# ❌ OLD sy commands (replaced by smart-dev)
-sy install                # → smart-dev install
-sy add <package>          # → smart-dev add <package>
-```
-
-**🎯 Use the NEW workflow for the best experience!** ⚡
 
 ---
 
