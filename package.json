@@ -41,16 +41,16 @@
     "apple-silicon",
     "workstation"
   ],
-  "author": "Your Name <your.email@example.com>",
+  "author": "Gustavo Salazar <tavo.slzr@outlook.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/c0d-3/react-native-performance-boost.git"
+    "url": "https://github.com/C0D-E/react-native-performance-boost.git"
   },
   "bugs": {
-    "url": "https://github.com/c0d-3/react-native-performance-boost/issues"
+    "url": "https://github.com/C0D-E/react-native-performance-boost/issues"
   },
-  "homepage": "https://github.com/c0d-3/react-native-performance-boost#readme",
+  "homepage": "https://github.com/C0D-E/react-native-performance-boost#readme",
   "engines": {
     "node": ">=18.0.0"
   },
