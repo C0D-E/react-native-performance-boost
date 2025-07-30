@@ -254,21 +254,23 @@ source smart-memory.sh         # Load into current environment
 yarn android                   # Experience the speed!
 ```
 
-### 🧠 **smart-dev.sh** - The Intelligent Optimizer
+### 🧠 **smart-dev** - The Unified Command Interface
 **What it does:**
-- **Auto-detects** if you added/removed packages
-- **Safe mode** for package operations (`yarn add`, `yarn install`)
-- **Performance mode** for builds when packages unchanged
+- **Auto-detects** build type (cold vs warm)
+- **Safe mode** for package operations (`smart-dev add`, `smart-dev install`)
+- **Performance mode** for builds with intelligent optimization
 - **Zero configuration** - just run and it handles everything
 
-**Memory Allocations:**
-- **Safe Mode**: 8GB Node.js (package operations)
-- **Performance Mode**: 32GB Node.js, 16GB Gradle, 16 threads
+**Key Commands:**
+- **smart-dev clean-cache**: Ultra-clean start
+- **smart-dev install**: Safe dependency installation
+- **smart-dev add/remove**: Package management with auto-optimization
+- **smart-dev android**: Intelligent build optimization
 
 **Usage:**
 ```bash
-./smart-dev.sh                 # Auto-detect and optimize
-./smart-dev.sh --update-check  # Update after yarn operations
+smart-dev help                 # Show all available commands
+smart-dev android              # Auto-detect and optimize build
 ```
 
 ### ⚡ **ultra-warmup.sh** - Maximum Warm Build Performance
@@ -290,41 +292,43 @@ yarn android                   # Experience the speed!
 yarn android  # Lightning fast! ⚡
 ```
 
-### 💻 **launch-vscode-64gb.sh** - VS Code Supercharger
+### 💻 **code-max** - VS Code Launcher with Maximum Performance
 **What it does:**
-- **64GB memory allocation** for VS Code
-- **Optimized flags** for maximum performance
+- **Intelligent memory allocation** based on your system
+- **Optimized launch flags** for maximum performance
 - **Enhanced for large React Native projects**
+- **No VS Code restarts** needed
 
 **Benefits:**
-- **Instant IntelliSense** for 973 npm packages
+- **Instant IntelliSense** for large codebases
 - **Lightning-fast file searches**
 - **Smooth performance** with multiple extensions
 - **Zero memory pressure** during builds
+
+**Usage:**
+```bash
+./code-max                     # Launch optimized VS Code (from Terminal app)
+```
 
 ---
 
 ## 🔄 Complete Workflows
 
-### **🚀 Your Perfect Daily Routine**
+### **🚀 Your Perfect Daily Routine (Updated)**
 ```bash
-# 1. Start development (once per session)
-cd performance-boost
-./startup.sh              # VS Code + Smart optimization in one!
+# 1. Start development session (Terminal app)
+./code-max                      # Launch optimized VS Code
 
-# 2. Package operations (when needed)
-sy add react-native-something     # Automatically safe
-sy install                        # After removing node_modules
-sy remove old-package            # Safe removal
+# 2. In VS Code terminal - Package operations (when needed)
+smart-dev add react-native-something     # Automatically safe + optimized
+smart-dev install                        # After removing node_modules
+smart-dev remove old-package            # Safe removal
 
 # 3. Build your app
-yarn android                     # Optimized build
+smart-dev android                     # Auto-optimized build (~20s first, 5-10s subsequent)
 
-# 4. Maximum performance (after first build)
-./ultra-warmup.sh                # Sets up 5-10 second builds
-yarn android                     # ⚡ LIGHTNING FAST!
-
-# 5. Repeat from step 2 as needed
+# 4. Code, test, repeat...
+smart-dev android                     # Always optimized! ⚡
 ```
 
 ### **🗓️ Typical Development Session**
@@ -486,13 +490,13 @@ METRO_CACHE_SIZE=unlimited
 
 ### **Problem: Package installation fails**
 **Solution:**
-1. Run `./smart-dev.sh` - should auto-detect safe mode
-2. If not, manually use safe mode temporarily
-3. Update tracking: `./smart-dev.sh --update-check`
+1. Run `smart-dev clean-cache` to reset state
+2. Try `smart-dev install` - uses safe memory optimizations
+3. Check logs for specific error messages
 
 ### **Problem: VS Code still feels slow**
 **Solution:**
-1. Restart VS Code: `./launch-vscode-64gb.sh`
+1. Restart VS Code with: `./code-max`
 2. Check memory in Activity Monitor
 3. Disable unnecessary extensions
 
