@@ -1,0 +1,79 @@
+#!/bin/zsh
+
+# CODE-MAX: Launch VS Code with Maximum Performance
+# Optimizes memory allocation before starting VS Code to avoid restarts
+
+set -e
+
+echo "🚀 CODE-MAX: VS Code Maximum Performance Launcher"
+echo "=================================================="
+echo ""
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Check if we're in a React Native project
+if [[ ! -f "package.json" ]]; then
+    echo "⚠️  Warning: Not in a React Native project directory"
+    echo "💡 Navigate to your project root first, then run 'code-max'"
+    echo ""
+fi
+
+echo "📊 Step 1: Analyzing System Memory for Optimal VS Code Configuration"
+echo "─────────────────────────────────────────────────────────────────────"
+
+# Run smart-memory to get optimal allocations (but capture output for VS Code)
+TEMP_OUTPUT=$(mktemp)
+source "$SCRIPT_DIR/smart-memory.sh" | tee "$TEMP_OUTPUT"
+
+# Extract memory allocation from smart-memory output
+NODE_ALLOC_KB=$((NODE_ALLOC * 1024))
+VSCODE_MEMORY=$((NODE_ALLOC * 1024 * 3/4))  # Use 75% of Node allocation for VS Code
+
+echo ""
+echo "🎯 Step 2: Preparing VS Code Launch with Optimized Memory"
+echo "─────────────────────────────────────────────────────────────────"
+echo "   💾 VS Code Memory Allocation: ${VSCODE_MEMORY}MB"
+echo "   🧠 Total Node.js Allocation: ${NODE_ALLOC}GB"
+echo "   🔥 Hardware Class: $HARDWARE_CLASS"
+echo "   ⚡ Optimization Mode: $MODE"
+
+# Clean up temp file
+rm -f "$TEMP_OUTPUT"
+
+echo ""
+echo "🚀 Step 3: Launching VS Code with Maximum Performance Settings"
+echo "─────────────────────────────────────────────────────────────────"
+
+# Launch VS Code with optimized memory and performance flags
+echo "   🔧 Applying memory optimizations..."
+echo "   🚀 Starting VS Code..."
+
+open -a "Visual Studio Code" --args \
+  --max-memory="$VSCODE_MEMORY" \
+  --max-old-space-size="$VSCODE_MEMORY" \
+  --max-semi-space-size=$((VSCODE_MEMORY / 16)) \
+  --optimize-for-size \
+  --trace-warnings \
+  --enable-source-maps \
+  .
+
+echo ""
+echo "✅ VS Code Launched Successfully!"
+echo "================================="
+echo ""
+echo "🎉 VS Code is now running with maximum performance settings:"
+echo "   💾 Memory: ${VSCODE_MEMORY}MB allocated"
+echo "   🧠 Optimized for: $HARDWARE_CLASS ($MODE mode)"
+echo "   📁 Project: $(basename $(pwd))"
+echo ""
+echo "📋 Next Steps (use VS Code's built-in terminal):"
+echo "   smart-dev clean-cache      # Clean all caches"
+echo "   smart-dev install         # Install dependencies" 
+echo "   smart-dev android         # Build with auto-optimization"
+echo ""
+echo "💡 For package management:"
+echo "   smart-dev add <package>    # Add packages safely"
+echo "   smart-dev remove <package> # Remove packages safely"
+echo ""
+echo "🚀 Your development environment is ready for maximum performance!"

@@ -1,0 +1,79 @@
+{
+  "name": "react-native-performance-boost",
+  "version": "1.0.0",
+  "description": "Performance optimization tools for React Native development - from 8GB laptops to 128GB workstations",
+  "main": "smart-dev",
+  "scripts": {
+    "setup": "./smart-dev help",
+    "clean": "./smart-dev clean-cache",
+    "install-deps": "./smart-dev install",
+    "android": "./smart-dev android",
+    "add": "./smart-dev add",
+    "remove": "./smart-dev remove",
+    "code-max": "./code-max",
+    "memory": "./smart-memory.sh",
+    "turbo": "./turbo-first-build.sh",
+    "ultra": "./ultra-warmup.sh"
+  },
+  "bin": {
+    "smart-dev": "./smart-dev",
+    "code-max": "./code-max",
+    "smart-memory": "./smart-memory.sh",
+    "turbo-first-build": "./turbo-first-build.sh",
+    "ultra-warmup": "./ultra-warmup.sh"
+  },
+  "keywords": [
+    "react-native",
+    "performance",
+    "optimization",
+    "build-tools",
+    "memory-management",
+    "android",
+    "ios",
+    "gradle",
+    "metro",
+    "development",
+    "mac",
+    "m1",
+    "m2",
+    "m3",
+    "m4",
+    "apple-silicon",
+    "workstation"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/c0d-3/react-native-performance-boost.git"
+  },
+  "bugs": {
+    "url": "https://github.com/c0d-3/react-native-performance-boost/issues"
+  },
+  "homepage": "https://github.com/c0d-3/react-native-performance-boost#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "arm64",
+    "x64"
+  ],
+  "peerDependencies": {
+    "react-native": ">=0.70.0"
+  },
+  "files": [
+    "smart-dev",
+    "code-max",
+    "smart-memory.sh",
+    "turbo-first-build.sh",
+    "ultra-warmup.sh",
+    "smart-yarn.sh",
+    "startup.sh",
+    "android/gradle.properties",
+    "README.md",
+    "README-FULL.md"
+  ]
+}

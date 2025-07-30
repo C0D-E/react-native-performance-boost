@@ -1,0 +1,272 @@
+#!/bin/zsh
+
+# SMART DEVELOPMENT WRAPPER
+# Intelligent package management and build optimization system
+# Usage: smart-dev [clean-cache|add|remove|install|android] [package-name]
+
+set -e  # Exit on any error
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+# State tracking file
+STATE_FILE="$PROJECT_ROOT/.smart-dev-state"
+
+# Logging functions
+log_header() {
+    echo ""
+    echo "🚀 ===== $1 ====="
+    echo ""
+}
+
+log_step() {
+    echo "📋 Step: $1"
+}
+
+log_success() {
+    echo "✅ $1"
+}
+
+log_warning() {
+    echo "⚠️  $1"
+}
+
+log_info() {
+    echo "ℹ️  $1"
+}
+
+# State management
+set_state() {
+    echo "$1" > "$STATE_FILE"
+    log_info "State: $1"
+}
+
+get_state() {
+    if [[ -f "$STATE_FILE" ]]; then
+        cat "$STATE_FILE"
+    else
+        echo "clean"
+    fi
+}
+
+# Clean cache function (reusable)
+clean_cache() {
+    log_header "CLEANING ALL CACHES"
+    
+    log_step "Cleaning Node.js caches"
+    rm -rf node_modules/.cache
+    log_success "Node.js caches cleared"
+    
+    log_step "Cleaning Android build artifacts"
+    rm -rf android/app/build
+    rm -rf android/.gradle
+    log_success "Android build artifacts cleared"
+    
+    log_step "Cleaning Gradle caches"
+    rm -rf ~/.gradle/caches/build-cache-*
+    log_success "Gradle caches cleared"
+    
+    log_step "Cleaning Yarn cache"
+    yarn cache clean --force >/dev/null 2>&1
+    log_success "Yarn cache cleared"
+    
+    log_step "Stopping Gradle daemon"
+    cd "$PROJECT_ROOT/android"
+    ./gradlew --stop >/dev/null 2>&1
+    cd "$PROJECT_ROOT"
+    log_success "Gradle daemon stopped"
+    
+    set_state "clean"
+    log_success "All caches cleaned successfully!"
+}
+
+# Safe memory optimizations for package operations
+set_safe_optimizations() {
+    log_header "SETTING SAFE PACKAGE OPTIMIZATIONS"
+    
+    log_step "Analyzing system memory for safe package operations"
+    source "$SCRIPT_DIR/smart-memory.sh"
+    
+    # Override with more conservative settings for package operations
+    export NODE_OPTIONS="--max-old-space-size=$((NODE_ALLOC * 1024 * 3/4)) --max-semi-space-size=$((NODE_ALLOC * 32)) --optimize-for-size"
+    
+    log_success "Safe memory optimizations applied"
+    log_info "Node.js: $((NODE_ALLOC * 3/4))GB (conservative for package safety)"
+    set_state "safe-optimized"
+}
+
+# Detect build type (cold vs warm)
+detect_build_type() {
+    local state=$(get_state)
+    
+    # Check if node_modules, android build, or yarn.lock recently changed
+    if [[ "$state" == "clean" ]] || [[ ! -d "node_modules" ]] || [[ ! -d "android/app/build" ]]; then
+        echo "cold"
+    elif [[ -f "yarn.lock" ]] && [[ $(find yarn.lock -mmin -30 2>/dev/null) ]]; then
+        echo "cold"
+    else
+        echo "warm"
+    fi
+}
+
+# Apply build optimizations
+apply_build_optimizations() {
+    local build_type="$1"
+    
+    if [[ "$build_type" == "cold" ]]; then
+        log_header "APPLYING TURBO OPTIMIZATIONS (COLD BUILD)"
+        log_step "Running turbo-first-build optimizations"
+        source "$SCRIPT_DIR/turbo-first-build.sh"
+        set_state "turbo-optimized"
+        log_success "TURBO optimizations applied - targeting ~20 second build"
+    else
+        log_header "APPLYING ULTRA OPTIMIZATIONS (WARM BUILD)"
+        log_step "Running ultra-warmup optimizations"
+        source "$SCRIPT_DIR/ultra-warmup.sh"
+        set_state "ultra-optimized"
+        log_success "ULTRA optimizations applied - targeting 5-10 second build"
+    fi
+}
+
+# Main command handler
+case "${1:-help}" in
+    "clean-cache")
+        clean_cache
+        echo ""
+        log_success "Cache cleaning complete!"
+        log_info "Next: Run 'smart-dev install' or 'smart-dev add <package>'"
+        ;;
+        
+    "add")
+        if [[ -z "$2" ]]; then
+            echo "❌ Error: Package name required"
+            echo "Usage: smart-dev add <package-name>"
+            exit 1
+        fi
+        
+        log_header "SMART PACKAGE ADDITION: $2"
+        
+        # Step 1: Clean cache
+        clean_cache
+        
+        # Step 2: Safe optimizations
+        set_safe_optimizations
+        
+        # Step 3: Add package
+        log_step "Adding package: $2"
+        yarn add "$2"
+        log_success "Package '$2' added successfully"
+        
+        # Step 4: Reinstall everything
+        log_step "Running yarn install to ensure consistency"
+        yarn install
+        log_success "Dependencies installed successfully"
+        
+        echo ""
+        log_success "Package addition complete!"
+        log_info "Next: Run 'smart-dev android' for optimized build"
+        ;;
+        
+    "remove")
+        if [[ -z "$2" ]]; then
+            echo "❌ Error: Package name required"
+            echo "Usage: smart-dev remove <package-name>"
+            exit 1
+        fi
+        
+        log_header "SMART PACKAGE REMOVAL: $2"
+        
+        # Step 1: Clean cache
+        clean_cache
+        
+        # Step 2: Safe optimizations
+        set_safe_optimizations
+        
+        # Step 3: Remove package
+        log_step "Removing package: $2"
+        yarn remove "$2"
+        log_success "Package '$2' removed successfully"
+        
+        # Step 4: Reinstall everything
+        log_step "Running yarn install to ensure consistency"
+        yarn install
+        log_success "Dependencies installed successfully"
+        
+        echo ""
+        log_success "Package removal complete!"
+        log_info "Next: Run 'smart-dev android' for optimized build"
+        ;;
+        
+    "install")
+        log_header "SMART PACKAGE INSTALLATION"
+        
+        # Safe optimizations
+        set_safe_optimizations
+        
+        # Install packages
+        log_step "Running yarn install"
+        yarn install
+        log_success "Dependencies installed successfully"
+        
+        echo ""
+        log_success "Package installation complete!"
+        log_info "Next: Run 'smart-dev android' for optimized build"
+        ;;
+        
+    "android")
+        log_header "SMART ANDROID BUILD"
+        
+        # Detect build type
+        local build_type=$(detect_build_type)
+        log_info "Build type detected: $build_type"
+        
+        # Apply appropriate optimizations
+        apply_build_optimizations "$build_type"
+        
+        # Run Android build
+        log_step "Starting Android build with optimizations"
+        yarn android
+        
+        # Update state
+        set_state "built"
+        
+        echo ""
+        log_success "Android build complete!"
+        if [[ "$build_type" == "cold" ]]; then
+            log_info "Next builds will be faster! Use 'smart-dev android' again for 5-10 second builds"
+        else
+            log_info "Build completed with ULTRA optimizations"
+        fi
+        ;;
+        
+    "help"|"--help"|"-h")
+        echo "🧠 SMART DEVELOPMENT WRAPPER"
+        echo ""
+        echo "Commands:"
+        echo "  smart-dev clean-cache              Clean all caches and reset state"
+        echo "  smart-dev add <package>            Add package with safe optimizations"
+        echo "  smart-dev remove <package>         Remove package with safe optimizations" 
+        echo "  smart-dev install                  Install dependencies with safe optimizations"
+        echo "  smart-dev android                  Build Android with auto-optimizations"
+        echo "  smart-dev help                     Show this help"
+        echo ""
+        echo "Workflow Examples:"
+        echo "  # Fresh start"
+        echo "  smart-dev clean-cache"
+        echo "  smart-dev install"
+        echo "  smart-dev android"
+        echo ""
+        echo "  # Add a package"
+        echo "  smart-dev add react-native-vector-icons"
+        echo "  smart-dev android"
+        echo ""
+        echo "  # Subsequent builds (automatic ultra-fast mode)"
+        echo "  smart-dev android"
+        ;;
+        
+    *)
+        echo "❌ Error: Unknown command '$1'"
+        echo "Run 'smart-dev help' for available commands"
+        exit 1
+        ;;
+esac
