@@ -156,7 +156,7 @@ yarn install && yarn android      # Standard builds (longer wait)
 
 ## 🔥 TURBO MODE EXPLAINED - How We Achieved ~20 Second Builds
 
-### **What happens when you run `smart-dev add` or `smart-dev install`:**
+### **🔥 What happens when you run `smart-dev add` or `smart-dev install`:**
 
 1. **🧠 Smart Detection**: Detects package.json/yarn.lock changes
 2. **🔥 AUTO-TURBO Activation**: Automatically runs `turbo-first-build.sh`
@@ -314,7 +314,7 @@ yarn android  # Lightning fast! ⚡
 
 ## 🔄 Complete Workflows
 
-### **🚀 Your Perfect Daily Routine (Updated)**
+### **🚀 Your Perfect Daily Routine**
 ```bash
 # 1. Start development session (Terminal app)
 ./code-max                      # Launch optimized VS Code
