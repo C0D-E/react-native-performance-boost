@@ -27,7 +27,7 @@ cd /path/to/your/react-native-project
 ```
 **What it does:**
 - 🧠 Analyzes your system memory (128GB M4 Max → WORKSTATION mode)
-- 💻 Launches VS Code with optimized memory allocation (36-48GB)
+- 💻 Launches VS Code with optimized memory allocation (32-48GB)
 - ⚡ No restarts needed - maximum performance from the start
 - 📋 Shows detailed logging of all optimizations applied
 
@@ -90,7 +90,7 @@ smart-dev android                          # ~5-10s build (ULTRA mode)
 | **Cold Build** | 4m 48s | ~45-60s | **80% faster** |
 | **TURBO First Build** | 1m 00s | **~20s** | **97% faster** |
 | **Warm Build** | 1m 31s | **5-10s** | **90% faster** |
-| **VS Code Performance** | Standard | **64GB allocated** | **Instant IntelliSense** |
+| **VS Code Performance** | Standard | **32-48GB allocated** | **Instant IntelliSense** |
 | **Package Operations** | Standard | **Smart Memory + Auto TURBO** | **Zero conflicts** |
 | **Memory Management** | Fixed allocations | **🧠 SMART ADAPTIVE + TEAM SAFE** | **System-safe** |
 
@@ -251,7 +251,7 @@ source smart-memory.sh         # Load into current environment
 **Usage:**
 ```bash
 ./turbo-first-build.sh         # Prepare for ~20 second builds
-yarn android                   # Experience the speed!
+smart-dev android              # Experience the speed!
 ```
 
 ### 🧠 **smart-dev** - The Unified Command Interface
@@ -289,7 +289,7 @@ smart-dev android              # Auto-detect and optimize build
 **Usage:**
 ```bash
 ./ultra-warmup.sh
-yarn android  # Lightning fast! ⚡
+smart-dev android  # Lightning fast! ⚡
 ```
 
 ### 💻 **code-max** - VS Code Launcher with Maximum Performance
@@ -484,9 +484,9 @@ METRO_CACHE_SIZE=unlimited
 
 ### **Problem: Build still slow after optimization**
 **Solution:**
-1. Ensure you ran `./ultra-warmup.sh` after first build
+1. Run `smart-dev clean-cache` to reset all optimizations
 2. Check Activity Monitor - verify high memory usage
-3. Try cleaning: `yarn start --reset-cache`
+3. Try cleaning: `smart-dev clean-cache && smart-dev android`
 
 ### **Problem: Package installation fails**
 **Solution:**
@@ -502,9 +502,9 @@ METRO_CACHE_SIZE=unlimited
 
 ### **Problem: Out of memory errors**
 **Solution:**
-1. You have 128GB RAM - this shouldn't happen
+1. Check available system memory - may need more RAM
 2. Check for memory leaks in extensions
-3. Restart terminal and re-run optimizations
+3. Run `smart-dev clean-cache` to reset optimizations
 
 ---
 
@@ -648,7 +648,7 @@ smart-dev android         # ~5-10s (ULTRA)
 
 **Your Mac Studio M4 Max is now optimized for:**
 - **⚡ 5-10 second warm builds** (vs 1m 31s before)
-- **🧠 64GB VS Code** for instant development experience
+- **🧠 32-48GB VS Code** for instant development experience
 - **🎯 Intelligent optimization** that adapts to your workflow
 - **📦 Safe package management** with zero conflicts
 - **🚀 Maximum hardware utilization** of your 128GB beast
